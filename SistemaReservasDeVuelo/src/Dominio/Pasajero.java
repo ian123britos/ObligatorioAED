@@ -1,41 +1,83 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Dominio;
 
-/**
- *
- * @author hlbc7
- */
-public class Pasajero {
-       public String Nombre;
-       public String Cedula;
-       public int Edad;
-       public Categoria categoria;
+public class Pasajero implements Comparable<Pasajero> {
 
-    public Pasajero(String nombre, String cedula,int edad,Categoria categoria) {
-        this.Nombre = nombre;
-        this.Cedula = cedula;
-        this.Edad =edad;
+    private String nombre;
+    private String cedula;
+    private int edad;
+    private Categoria categoria;
+
+    public Pasajero(String nombre, String cedula, int edad, Categoria categoria) {
+
+        this.nombre = nombre;
+        this.cedula = cedula;
+        this.edad = edad;
         this.categoria = categoria;
-        Validar();
+
+        validar();
     }
-    
-    public void Validar()
-    {
-        //ValidarNombre();
-        //ValidarCedula();
-        //ValidarEdad();
+
+    public void validar() {
+
+        // ValidarNombre();
+        // ValidarCedula();
+        // ValidarEdad();
+
+    }
+
+    // GETTERS
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    // SETTERS
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @Override
     public boolean equals(Object obj) {
-        //pregunto si el objeto ingresado no es un Pasajero, si no lo es return --> false
-        //sino hace la comparacion de las cedulas
-       if (!(obj instanceof Pasajero)) return false;
-       Pasajero p = (Pasajero) obj;
-        return p.Cedula.equals(this.Cedula);
-// comparo los dos objetos si son iguales         
+
+        // si NO es pasajero
+        if (!(obj instanceof Pasajero)) {
+            return false;
+        }
+
+        Pasajero p = (Pasajero) obj;
+
+        return this.cedula.equals(p.cedula);
     }
+    
+     @Override
+    public int compareTo(Pasajero p) {
+
+        return this.cedula.compareTo(p.cedula);
+    }
+
 }
