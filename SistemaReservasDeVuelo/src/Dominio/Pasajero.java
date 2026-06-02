@@ -7,7 +7,7 @@ public class Pasajero implements Comparable<Pasajero> {
     private int edad;
     private Categoria categoria;
 
-    public Pasajero(String nombre, String cedula, int edad, Categoria categoria) throws Exception {
+    public Pasajero(String nombre, String cedula, int edad, Categoria categoria) {
 
         this.nombre = nombre;
         this.cedula = cedula;
@@ -17,40 +17,12 @@ public class Pasajero implements Comparable<Pasajero> {
         validar();
     }
 
-    public void validar() throws Exception {
+    public void validar() {
 
-        validarNombre();
-        validarCedula();
-        validarEdad();
+        // ValidarNombre();
+        // ValidarCedula();
+        // ValidarEdad();
 
-    }
-
-    // VALIDACIONES
-
-    private void validarNombre() throws Exception {
-
-        if (nombre == null || nombre.isEmpty()) {
-
-            throw new Exception("ERROR_1");
-        }
-    }
-
-    private void validarCedula() throws Exception {
-
-        String regex = "\\d\\.\\d{3}\\.\\d{3}-\\d|\\d{3}\\.\\d{3}-\\d";
-
-        if (cedula == null || !cedula.matches(regex)) {
-
-            throw new Exception("ERROR_2");
-        }
-    }
-
-    private void validarEdad() throws Exception {
-
-        if (edad < 0) {
-
-            throw new Exception("ERROR_3");
-        }
     }
 
     // GETTERS
@@ -101,8 +73,10 @@ public class Pasajero implements Comparable<Pasajero> {
 
         return this.cedula.equals(p.cedula);
     }
-    // cambiamos el compareto sobrescribiendolo para que verifique por cedula
-    @Override
+    
+    
+    //para poder ordenar por cedula los pasajeros 
+     @Override
     public int compareTo(Pasajero p) {
 
         return this.cedula.compareTo(p.cedula);
