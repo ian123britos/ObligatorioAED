@@ -9,5 +9,9 @@ public interface ISistema {
     Retorno buscarPasajero(String cedula);
     Retorno listarPasajerosAscendente();
     Retorno listarPasajerosDescendente();
+    Retorno listarPasajerosPorCategoría(Categoria unaCategoria);
+    Retorno registrarVuelo(String codigoAeropuertoOrigen, String
+codigoAeropuertoDestino,String codigoDeVuelo, int capacidad, int
+costoEnDolares);
 
 }

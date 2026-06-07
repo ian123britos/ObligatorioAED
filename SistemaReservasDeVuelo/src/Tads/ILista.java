@@ -8,11 +8,11 @@ public interface ILista<T> {
 
     void Adicionar(T x);
 
-    void Insertar(T x, int pos);   // ya no throws Exception
+    void Insertar(T x, int pos);   
 
-    T Obtener(int pos);            // ya no throws Exception
+    T Obtener(int pos);            
 
-    void Eliminar(int pos);        // ya no throws Exception
+    void Eliminar(int pos);        
 
     int Longitud();
 
