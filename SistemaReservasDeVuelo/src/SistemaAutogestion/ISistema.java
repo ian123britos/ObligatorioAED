@@ -5,13 +5,21 @@ import Dominio.Categoria;
 public interface ISistema {
 
     Retorno inicializarSistema();
-    Retorno registrarPasajero(String cedula, String nombre, int edad,Categoria categoria);
+
+    Retorno registrarPasajero(String cedula, String nombre, int edad, Categoria categoria);
+
     Retorno buscarPasajero(String cedula);
+
     Retorno listarPasajerosAscendente();
+
     Retorno listarPasajerosDescendente();
+
     Retorno listarPasajerosPorCategoría(Categoria unaCategoria);
-    Retorno registrarVuelo(String codigoAeropuertoOrigen, String
-codigoAeropuertoDestino,String codigoDeVuelo, int capacidad, int
-costoEnDolares);
+
+    Retorno registrarVuelo(String codigoAeropuertoOrigen, String codigoAeropuertoDestino, String codigoDeVuelo, int capacidad, int costoEnDolares);
+
+    Retorno registrarAeropuerto(String codigo, String nombre);
+
+    Retorno obtenerAeropuerto(String codigo);
 
 }

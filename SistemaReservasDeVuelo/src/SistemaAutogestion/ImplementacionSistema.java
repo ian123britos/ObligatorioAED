@@ -122,7 +122,7 @@ public class ImplementacionSistema implements ISistema {
     public Retorno listarPasajerosDescendente() {
         Retorno retorno = new Retorno(Retorno.Resultado.OK);
         String resultado = "";
-        
+
         // No se si seria solo pasajeros.Longitud() o con el -1 como está
         for (int i = pasajeros.Longitud() - 1; i >= 0; i--) {
             Pasajero pasajero = pasajeros.Obtener(i);
@@ -140,103 +140,123 @@ public class ImplementacionSistema implements ISistema {
         retorno.valorString = resultado;
         return retorno;
     }
-    
-    @Override 
-    public Retorno listarPasajerosPorCategoría(Categoria unaCategoria)
-    {
+
+    @Override
+    public Retorno listarPasajerosPorCategoría(Categoria unaCategoria) {
         Retorno retorno = new Retorno(Retorno.Resultado.OK);
-        
+
         String resultado = "";
-        
-        for(int  i = 0; i < pasajeros.Longitud();i++ )
-        {
+
+        for (int i = 0; i < pasajeros.Longitud(); i++) {
             Pasajero pasajeroObtenido = pasajeros.Obtener(i);
-            
-            if(pasajeroObtenido.getCategoria() == unaCategoria)
-            {
-                  if (!resultado.equals("")) {
+
+            if (pasajeroObtenido.getCategoria() == unaCategoria) {
+                if (!resultado.equals("")) {
                     resultado += "|";
-                  }
-                
-                
-                resultado += pasajeroObtenido.getCedula() + ";" +
-                        pasajeroObtenido.getNombre() + ";" +
-                        pasajeroObtenido.getEdad() + ";" +
-                        pasajeroObtenido.getCategoria();
-                        
-                        
+                }
+
+                resultado += pasajeroObtenido.getCedula() + ";"
+                        + pasajeroObtenido.getNombre() + ";"
+                        + pasajeroObtenido.getEdad() + ";"
+                        + pasajeroObtenido.getCategoria();
+
             }
-        
+
         }
-            retorno.valorString = resultado;            
-            return retorno;
-            
+        retorno.valorString = resultado;
+        return retorno;
+
     }
-    
-    public Retorno registrarVuelo(String codigoAeropuertoOrigen, String
-codigoAeropuertoDestino,String codigoDeVuelo, int capacidad, int
-costoEnDolares)
-    {
-        
-        if(capacidad <= 0 || costoEnDolares <= 0)
-        {
+
+    public Retorno registrarVuelo(String codigoAeropuertoOrigen, String codigoAeropuertoDestino, String codigoDeVuelo, int capacidad, int costoEnDolares) {
+
+        if (capacidad <= 0 || costoEnDolares <= 0) {
             return new Retorno(Retorno.Resultado.ERROR_1);
-            
-            
+
         }
-        
-        if(codigoAeropuertoOrigen == null || codigoAeropuertoDestino == null || codigoDeVuelo == null
-                || codigoAeropuertoOrigen.trim().isEmpty() || codigoAeropuertoDestino.trim().isEmpty() 
-                || codigoDeVuelo.trim().isEmpty())
-        {
+
+        if (codigoAeropuertoOrigen == null || codigoAeropuertoDestino == null || codigoDeVuelo == null
+                || codigoAeropuertoOrigen.trim().isEmpty() || codigoAeropuertoDestino.trim().isEmpty()
+                || codigoDeVuelo.trim().isEmpty()) {
             return new Retorno(Retorno.Resultado.ERROR_2);
         }
-        
+
         Aeropuerto origen = null;
         Aeropuerto destino = null;
-        for(int i = 0; i<aeropuertos.Longitud();i++)
-        {
+        for (int i = 0; i < aeropuertos.Longitud(); i++) {
             Aeropuerto AerObtenido = aeropuertos.Obtener(i);
-            
-            if(AerObtenido.getCodigo().equalsIgnoreCase(codigoAeropuertoOrigen))
-            {
+
+            if (AerObtenido.getCodigo().equalsIgnoreCase(codigoAeropuertoOrigen)) {
                 origen = AerObtenido;
             }
-            if(AerObtenido.getCodigo().equalsIgnoreCase(codigoAeropuertoDestino))
-            {
-             destino = AerObtenido;   
-                
+            if (AerObtenido.getCodigo().equalsIgnoreCase(codigoAeropuertoDestino)) {
+                destino = AerObtenido;
+
             }
 
         }
         //entonces si origen o destino salen como null de ese for aplico los errores
-        if(origen == null)
-        {
+        if (origen == null) {
             return new Retorno(Retorno.Resultado.ERROR_3);
         }
-        if(destino== null)
-        {
-           return new Retorno(Retorno.Resultado.ERROR_4);
+        if (destino == null) {
+            return new Retorno(Retorno.Resultado.ERROR_4);
 
         }
-        
-        for(int i = 0; i <vuelos.Longitud(); i++)
-        {
-            Vuelo vueloObtenido =  vuelos.Obtener(i);
-            
-            if(vueloObtenido.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo))
-            {
+
+        for (int i = 0; i < vuelos.Longitud(); i++) {
+            Vuelo vueloObtenido = vuelos.Obtener(i);
+
+            if (vueloObtenido.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo)) {
                 return new Retorno(Retorno.Resultado.ERROR_5);
             }
-            
+
         }
-        
-       Vuelo vuelo =  new Vuelo(codigoDeVuelo,origen,destino,capacidad,costoEnDolares);
-       vuelos.Adicionar(vuelo);
-       
-       return new Retorno(Retorno.Resultado.OK);
-         
+
+        Vuelo vuelo = new Vuelo(codigoDeVuelo, origen, destino, capacidad, costoEnDolares);
+        vuelos.Adicionar(vuelo);
+
+        return new Retorno(Retorno.Resultado.OK);
+
     }
 
+    @Override
+    public Retorno registrarAeropuerto(String codigo, String nombre) {
+
+        if (codigo == null || codigo.isEmpty() || nombre == null || nombre.isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
+
+        for (int i = 0; i < aeropuertos.Longitud(); i++) {
+            Aeropuerto aeropuertoExiste = aeropuertos.Obtener(i);
+
+            if (aeropuertoExiste.getCodigo().equalsIgnoreCase(codigo)) {
+                return new Retorno(Retorno.Resultado.ERROR_1);
+            }
+        }
+
+        aeropuertos.Adicionar(new Aeropuerto(codigo, nombre));
+
+        return new Retorno(Retorno.Resultado.OK);
+    }
+
+    @Override
+    public Retorno obtenerAeropuerto(String codigo) {
+        if (codigo == null || codigo.trim().isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
+
+        for (int i = 0; i < aeropuertos.Longitud(); i++) {
+            Aeropuerto aeropuerto = aeropuertos.Obtener(i);
+            if (aeropuerto.getCodigo().equalsIgnoreCase(codigo)) {
+                Retorno retorno = new Retorno(Retorno.Resultado.OK);
+                retorno.valorString = aeropuerto.getCodigo() + ";" + aeropuerto.getNombre();
+                retorno.valorEntero = aeropuerto.getVuelosEnEspera().cantidad();
+                return retorno;
+            }
+        }
+
+        return new Retorno(Retorno.Resultado.ERROR_2);
+    }
 
 }
