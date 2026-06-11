@@ -13,6 +13,19 @@
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/ILista.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Dominio/Pasajero.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Dominio/Aeropuerto.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/NodoDE.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/ListaDE.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/ListaVaciaException.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/PosFueraDeRangoException.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Dominio/Reserva.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/SistemaAutogestion/Retorno.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/Cola.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test01InicializarSistema.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test02RegistrarPasajero.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test03BuscarPasajero.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test04ListarPasajerosAscendente.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test05ListarPasajerosDescendentes.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test06ListarPasajerosPorCategoria.java</file>
         </group>
     </open-files>
 </project-private>

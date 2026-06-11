@@ -5,6 +5,7 @@ import Dominio.Aeropuerto;
 import Dominio.Pasajero;
 import Dominio.Reserva;
 import Dominio.Vuelo;
+import Dominio.EstadoVuelo;
 
 import Tads.ILista;
 import Tads.ListaSE;
@@ -237,6 +238,62 @@ costoEnDolares)
        return new Retorno(Retorno.Resultado.OK);
          
     }
+    
+    
+    @Override
+public Retorno obtenerInformacionDeVuelo(String codigoDeVuelo) {
 
+    if (codigoDeVuelo == null || codigoDeVuelo.trim().isEmpty()) {
+        return new Retorno(Retorno.Resultado.ERROR_1);
+    }
+
+    for (int i = 0; i < vuelos.Longitud(); i++) {
+
+        Vuelo vuelo = vuelos.Obtener(i);
+
+        if (vuelo.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo)) {
+
+            Retorno retorno = new Retorno(Retorno.Resultado.OK);
+
+            retorno.valorString =
+                    vuelo.getAeropuertoOrigen().getCodigo() + ":"
+                    + vuelo.getAeropuertoDestino().getCodigo() + ";"
+                    + vuelo.getCodigoVuelo() + ";"
+                    + vuelo.getCapacidad() + ";"
+                    + vuelo.getCostoEnDolares() + ";"
+                    + vuelo.getEstado();
+
+            return retorno;
+        }
+    }
+
+    return new Retorno(Retorno.Resultado.ERROR_2);
+}
+
+@Override
+public Retorno abrirVuelo(String codigoDeVuelo) {
+
+    if (codigoDeVuelo == null || codigoDeVuelo.trim().isEmpty()) {
+        return new Retorno(Retorno.Resultado.ERROR_1);
+    }
+
+    for (int i = 0; i < vuelos.Longitud(); i++) {
+
+        Vuelo vuelo = vuelos.Obtener(i);
+
+        if (vuelo.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo)) {
+
+            if (vuelo.getEstado() != EstadoVuelo.PROGRAMADO) {
+                return new Retorno(Retorno.Resultado.ERROR_3);
+            }
+
+            vuelo.setEstado(EstadoVuelo.ABIERTO);
+
+            return new Retorno(Retorno.Resultado.OK);
+        }
+    }
+
+    return new Retorno(Retorno.Resultado.ERROR_2);
+}
 
 }

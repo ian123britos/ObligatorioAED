@@ -13,5 +13,7 @@ public interface ISistema {
     Retorno registrarVuelo(String codigoAeropuertoOrigen, String
 codigoAeropuertoDestino,String codigoDeVuelo, int capacidad, int
 costoEnDolares);
+     Retorno obtenerInformacionDeVuelo(String codigoDeVuelo);
+     Retorno abrirVuelo(String codigoDeVuelo);
 
 }
