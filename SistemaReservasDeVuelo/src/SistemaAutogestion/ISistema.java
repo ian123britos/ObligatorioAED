@@ -21,5 +21,6 @@ public interface ISistema {
     Retorno registrarAeropuerto(String codigo, String nombre);
 
     Retorno obtenerAeropuerto(String codigo);
-
+    
+    Retorno embarqueYDespegueDeVuelo(String codigoAeropuerto);
 }

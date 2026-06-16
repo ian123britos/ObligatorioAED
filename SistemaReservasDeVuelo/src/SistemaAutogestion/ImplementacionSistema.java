@@ -5,6 +5,7 @@ import Dominio.Aeropuerto;
 import Dominio.Pasajero;
 import Dominio.Reserva;
 import Dominio.Vuelo;
+import Dominio.EstadoVuelo;
 
 import Tads.ILista;
 import Tads.ListaSE;
@@ -258,5 +259,42 @@ public class ImplementacionSistema implements ISistema {
 
         return new Retorno(Retorno.Resultado.ERROR_2);
     }
+    
+    @Override
+public Retorno embarqueYDespegueDeVuelo(String codigoAeropuerto) {
+
+    if (codigoAeropuerto == null || codigoAeropuerto.trim().isEmpty()) {
+        return new Retorno(Retorno.Resultado.ERROR_1);
+    }
+
+    // Buscar el aeropuerto por código
+    Aeropuerto aeropuerto = null;
+    for (int i = 0; i < aeropuertos.Longitud(); i++) {
+        Aeropuerto aerObtenido = aeropuertos.Obtener(i);
+        if (aerObtenido.getCodigo().equalsIgnoreCase(codigoAeropuerto)) {
+            aeropuerto = aerObtenido;
+        }
+    }
+
+    // Si no existe el aeropuerto
+    if (aeropuerto == null) {
+        return new Retorno(Retorno.Resultado.ERROR_2);
+    }
+
+    // Si no hay vuelos esperando en la cola
+    if (aeropuerto.getVuelosEnEspera().esVacia()) {
+        return new Retorno(Retorno.Resultado.ERROR_3);
+    }
+
+    // Tomar el vuelo que llegó primero (más antiguo) y cambiarlo a finalizado
+    Vuelo vuelo = aeropuerto.getVuelosEnEspera().desencolar();
+    vuelo.setEstado(EstadoVuelo.FINALIZADO);
+
+    Retorno retorno = new Retorno(Retorno.Resultado.OK);
+    retorno.valorString = vuelo.getCodigoVuelo();
+    retorno.valorEntero = aeropuerto.getVuelosEnEspera().cantidad();
+
+    return retorno;
+}
 
 }
