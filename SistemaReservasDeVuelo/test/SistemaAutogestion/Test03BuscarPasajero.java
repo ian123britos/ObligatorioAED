@@ -32,7 +32,7 @@ public class Test03BuscarPasajero {
     }
 
     @Test
-    public void testBuscarPasajero_OK_FormatoCorto() { // NO PASO
+    public void testBuscarPasajero_OK_FormatoCorto() { 
         sistema.registrarPasajero("845.345-4", "Juan", 25, Categoria.Esporádico);
         Retorno r = sistema.buscarPasajero("845.345-4");
         assertEquals(Retorno.Resultado.OK, r.resultado);

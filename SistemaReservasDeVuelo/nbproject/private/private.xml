@@ -11,7 +11,6 @@
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/ListaSE.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/NodoSE.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/ILista.java</file>
-            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Dominio/Pasajero.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Dominio/Aeropuerto.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/NodoDE.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Tads/ListaDE.java</file>
@@ -26,6 +25,15 @@
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test04ListarPasajerosAscendente.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test05ListarPasajerosDescendentes.java</file>
             <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test06ListarPasajerosPorCategoria.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test07RegistrarAeropuerto.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test08ObtenerAeropuerto.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test09RegistrarVuelo.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test10ObtenerInformacionDeVuelo.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test11AbrirVuelo.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test12CerrarVuelo.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test13RealizarReserva.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/test/SistemaAutogestion/Test14RealizarCheckIn.java</file>
+            <file>file:/C:/Users/hlbc7/ObligatorioAED/SistemaReservasDeVuelo/src/Dominio/Pasajero.java</file>
         </group>
     </open-files>
 </project-private>

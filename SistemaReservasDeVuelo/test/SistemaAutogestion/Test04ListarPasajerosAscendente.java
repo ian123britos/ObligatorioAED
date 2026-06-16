@@ -37,7 +37,7 @@ public class Test04ListarPasajerosAscendente {
     }
 
     @Test
-    public void testListarAscendente_OrdenCorrecto() { //NO PASO
+    public void testListarAscendente_OrdenCorrecto() { 
         // Se insertan en desorden, deben salir ordenados
         sistema.registrarPasajero("4.985.345-4", "Camila", 30, Categoria.Frecuente);
         sistema.registrarPasajero("845.345-4", "Juan", 25, Categoria.Esporádico);

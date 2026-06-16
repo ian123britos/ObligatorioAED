@@ -76,22 +76,13 @@ public class Pasajero implements Comparable<Pasajero> {
     
     
     
-  //  @Override ESTE COMPARETO ES POR SI CEDULA SOLO DEBE SER NUMERICA SIN . NI -. Puede causar error en ordenamiento de pasajero por cedula numerica ascendente
-//public int compareTo(Pasajero p) { ESTE AYUDA  A INSERTAR PASAJEROS SEGUN EL VALOR NUMERICO DE LA CEDULA
-
-  //  String cedula1 = this.cedula.replace(".", "").replace("-", "");
- //   String cedula2 = p.cedula.replace(".", "").replace("-", "");
-
-  //  long num1 = Long.parseLong(cedula1);
-  //  long num2 = Long.parseLong(cedula2);
-
-   // return Long.compare(num1, num2);
-//}
-    //para poder ordenar por cedula los pasajeros 
-     @Override
-    public int compareTo(Pasajero p) {
-
-        return this.cedula.compareTo(p.cedula);
-    }
+@Override
+public int compareTo(Pasajero p) {
+    String cedula1 = this.cedula.replace(".", "").replace("-", "");
+    String cedula2 = p.cedula.replace(".", "").replace("-", "");
+    long num1 = Long.parseLong(cedula1);
+    long num2 = Long.parseLong(cedula2);
+    return Long.compare(num1, num2);
+}
 
 }
