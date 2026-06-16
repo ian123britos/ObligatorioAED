@@ -20,6 +20,7 @@ public class ImplementacionSistema implements ISistema {
 
     private ILista<Reserva> reservas;
 
+    //Ejercicio 1:
     @Override
     public Retorno inicializarSistema() {
 
@@ -31,6 +32,7 @@ public class ImplementacionSistema implements ISistema {
         return new Retorno(Retorno.Resultado.OK);
     }
 
+    //Ejercicio 2:
     @Override
     public Retorno registrarPasajero(String cedula, String nombre, int edad, Categoria categoria) {
 
@@ -40,7 +42,7 @@ public class ImplementacionSistema implements ISistema {
 
         }
 
-        if (!cedula.matches("^\\d{1,2}\\.\\d{3}\\.\\d{3}-\\d$")) {
+        if (!cedula.matches("^(\\d{1,2}\\.)?\\d{3}\\.\\d{3}-\\d$")) {
             return new Retorno(Retorno.Resultado.ERROR_2);
         }
 
@@ -69,31 +71,24 @@ public class ImplementacionSistema implements ISistema {
 
     @Override
     public Retorno buscarPasajero(String cedula) {
-        if (!cedula.matches("^\\d{1,2}\\.\\d{3}\\.\\d{3}-\\d$")) {
+        if (cedula == null || !cedula.matches("^(\\d{1,2}\\.)?\\d{3}\\.\\d{3}-\\d$")) {
             return new Retorno(Retorno.Resultado.ERROR_1);
         }
-
         for (int i = 0; i < pasajeros.Longitud(); i++) {
-            //verificamos en la lista de pasajeros si hay un pasajero con la misma cedula que la dada por parametro
             Pasajero pasajero = pasajeros.Obtener(i);
             if (pasajero.getCedula().equals(cedula)) {
-                //si hay un pasajero con esa cedula en la lista se devuelve en valorString con el formato dado.
                 Retorno retorno = new Retorno(Retorno.Resultado.OK);
-
                 retorno.valorString = pasajero.getCedula() + ";"
                         + pasajero.getNombre() + ";"
                         + pasajero.getEdad() + ";"
                         + pasajero.getCategoria();
-
                 return retorno;
             }
-
         }
-
-        //Si no existe un pasajero registrado con esa cédula.
         return new Retorno(Retorno.Resultado.ERROR_2);
     }
 
+    //Ejercicio 4:
     @Override
     public Retorno listarPasajerosAscendente() {
         Retorno retorno = new Retorno(Retorno.Resultado.OK);
@@ -119,6 +114,7 @@ public class ImplementacionSistema implements ISistema {
         return retorno;
     }
 
+    //Ejercicio 5:
     @Override
     public Retorno listarPasajerosDescendente() {
         Retorno retorno = new Retorno(Retorno.Resultado.OK);
@@ -142,6 +138,7 @@ public class ImplementacionSistema implements ISistema {
         return retorno;
     }
 
+    //Ejercicio 6:
     @Override
     public Retorno listarPasajerosPorCategoría(Categoria unaCategoria) {
         Retorno retorno = new Retorno(Retorno.Resultado.OK);
@@ -169,6 +166,48 @@ public class ImplementacionSistema implements ISistema {
 
     }
 
+    //Ejercicio 7 Falta test:
+    @Override
+    public Retorno registrarAeropuerto(String codigo, String nombre) {
+
+        if (codigo == null || codigo.isEmpty() || nombre == null || nombre.isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
+
+        for (int i = 0; i < aeropuertos.Longitud(); i++) {
+            Aeropuerto aeropuertoExiste = aeropuertos.Obtener(i);
+
+            if (aeropuertoExiste.getCodigo().equalsIgnoreCase(codigo)) {
+                return new Retorno(Retorno.Resultado.ERROR_2);
+            }
+        }
+
+        aeropuertos.Adicionar(new Aeropuerto(codigo, nombre));
+
+        return new Retorno(Retorno.Resultado.OK);
+    }
+
+    //Ejercicio 8 falta test
+    @Override
+    public Retorno obtenerAeropuerto(String codigo) {
+        if (codigo == null || codigo.trim().isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
+
+        for (int i = 0; i < aeropuertos.Longitud(); i++) {
+            Aeropuerto aeropuerto = aeropuertos.Obtener(i);
+            if (aeropuerto.getCodigo().equalsIgnoreCase(codigo)) {
+                Retorno retorno = new Retorno(Retorno.Resultado.OK);
+                retorno.valorString = aeropuerto.getCodigo() + ";" + aeropuerto.getNombre();
+                retorno.valorEntero = aeropuerto.getVuelosEnEspera().cantidad();
+                return retorno;
+            }
+        }
+
+        return new Retorno(Retorno.Resultado.ERROR_2);
+    }
+
+    @Override
     public Retorno registrarVuelo(String codigoAeropuertoOrigen, String codigoAeropuertoDestino, String codigoDeVuelo, int capacidad, int costoEnDolares) {
 
         if (capacidad <= 0 || costoEnDolares <= 0) {
@@ -222,79 +261,279 @@ public class ImplementacionSistema implements ISistema {
     }
 
     @Override
-    public Retorno registrarAeropuerto(String codigo, String nombre) {
+    public Retorno obtenerInformacionDeVuelo(String codigoDeVuelo) {
 
-        if (codigo == null || codigo.isEmpty() || nombre == null || nombre.isEmpty()) {
+        if (codigoDeVuelo == null || codigoDeVuelo.trim().isEmpty()) {
             return new Retorno(Retorno.Resultado.ERROR_1);
         }
 
-        for (int i = 0; i < aeropuertos.Longitud(); i++) {
-            Aeropuerto aeropuertoExiste = aeropuertos.Obtener(i);
+        for (int i = 0; i < vuelos.Longitud(); i++) {
 
-            if (aeropuertoExiste.getCodigo().equalsIgnoreCase(codigo)) {
-                return new Retorno(Retorno.Resultado.ERROR_1);
-            }
-        }
+            Vuelo vuelo = vuelos.Obtener(i);
 
-        aeropuertos.Adicionar(new Aeropuerto(codigo, nombre));
+            if (vuelo.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo)) {
 
-        return new Retorno(Retorno.Resultado.OK);
-    }
-
-    @Override
-    public Retorno obtenerAeropuerto(String codigo) {
-        if (codigo == null || codigo.trim().isEmpty()) {
-            return new Retorno(Retorno.Resultado.ERROR_1);
-        }
-
-        for (int i = 0; i < aeropuertos.Longitud(); i++) {
-            Aeropuerto aeropuerto = aeropuertos.Obtener(i);
-            if (aeropuerto.getCodigo().equalsIgnoreCase(codigo)) {
                 Retorno retorno = new Retorno(Retorno.Resultado.OK);
-                retorno.valorString = aeropuerto.getCodigo() + ";" + aeropuerto.getNombre();
-                retorno.valorEntero = aeropuerto.getVuelosEnEspera().cantidad();
+
+                retorno.valorString
+                        = vuelo.getAeropuertoOrigen().getCodigo() + ":"
+                        + vuelo.getAeropuertoDestino().getCodigo() + ";"
+                        + vuelo.getCodigoVuelo() + ";"
+                        + vuelo.getCapacidad() + ";"
+                        + vuelo.getCostoEnDolares() + ";"
+                        + vuelo.getEstado();
+
                 return retorno;
             }
         }
 
         return new Retorno(Retorno.Resultado.ERROR_2);
     }
-    
+
     @Override
-public Retorno embarqueYDespegueDeVuelo(String codigoAeropuerto) {
+    public Retorno abrirVuelo(String codigoDeVuelo) {
 
-    if (codigoAeropuerto == null || codigoAeropuerto.trim().isEmpty()) {
-        return new Retorno(Retorno.Resultado.ERROR_1);
-    }
-
-    // Buscar el aeropuerto por código
-    Aeropuerto aeropuerto = null;
-    for (int i = 0; i < aeropuertos.Longitud(); i++) {
-        Aeropuerto aerObtenido = aeropuertos.Obtener(i);
-        if (aerObtenido.getCodigo().equalsIgnoreCase(codigoAeropuerto)) {
-            aeropuerto = aerObtenido;
+        if (codigoDeVuelo == null || codigoDeVuelo.trim().isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
         }
-    }
 
-    // Si no existe el aeropuerto
-    if (aeropuerto == null) {
+        for (int i = 0; i < vuelos.Longitud(); i++) {
+
+            Vuelo vuelo = vuelos.Obtener(i);
+
+            if (vuelo.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo)) {
+
+                if (vuelo.getEstado() != EstadoVuelo.PROGRAMADO) {
+                    return new Retorno(Retorno.Resultado.ERROR_3);
+                }
+
+                vuelo.setEstado(EstadoVuelo.ABIERTO);
+
+                return new Retorno(Retorno.Resultado.OK);
+            }
+        }
+
         return new Retorno(Retorno.Resultado.ERROR_2);
     }
 
-    // Si no hay vuelos esperando en la cola
-    if (aeropuerto.getVuelosEnEspera().esVacia()) {
-        return new Retorno(Retorno.Resultado.ERROR_3);
+    //Ejercicio 12
+    @Override
+    public Retorno cerrarVuelo(String codigoDeVuelo) {
+        if (codigoDeVuelo == null || codigoDeVuelo.trim().isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
+        Vuelo vueloEncontrado = null;
+        for (int i = 0; i < vuelos.Longitud(); i++) {
+            Vuelo v = vuelos.Obtener(i);
+            if (v.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo)) {
+                vueloEncontrado = v;
+                break;
+            }
+        }
+        if (vueloEncontrado == null) {
+            return new Retorno(Retorno.Resultado.ERROR_2);
+        }
+        if (vueloEncontrado.getEstado() != EstadoVuelo.ABIERTO) {
+            return new Retorno(Retorno.Resultado.ERROR_3);
+        }
+        // Cambiar estado
+        vueloEncontrado.setEstado(EstadoVuelo.CERRADO);
+        // Encolar en el aeropuerto de origen
+        vueloEncontrado.getAeropuertoOrigen().getVuelosEnEspera().encolar(vueloEncontrado);
+        // Recorrer reservas del vuelo
+        ILista<Pasajero> confirmados = new ListaSE<>();
+        int sinCheckIn = 0;
+        for (int i = 0; i < reservas.Longitud(); i++) {
+            Reserva reserva = reservas.Obtener(i);
+            if (reserva.getVuelo().equals(vueloEncontrado)) {
+                if (reserva.isCheckIn()) {
+                    confirmados.adicionarOrdenado(reserva.getPasajero());
+                } else {
+                    sinCheckIn++;
+                }
+            }
+        }
+        // Armar el valorString con los confirmados (formato idem op4)
+        String resultado = "";
+        for (int i = 0; i < confirmados.Longitud(); i++) {
+            Pasajero pasajero = confirmados.Obtener(i);
+            resultado += pasajero.getCedula() + ";"
+                    + pasajero.getNombre() + ";"
+                    + pasajero.getEdad() + ";"
+                    + pasajero.getCategoria();
+            if (i < confirmados.Longitud() - 1) {
+                resultado += "|";
+            }
+        }
+        Retorno retorno = new Retorno(Retorno.Resultado.OK);
+        retorno.valorString = resultado;
+        retorno.valorEntero = sinCheckIn;
+        return retorno;
     }
 
-    // Tomar el vuelo que llegó primero (más antiguo) y cambiarlo a finalizado
-    Vuelo vuelo = aeropuerto.getVuelosEnEspera().desencolar();
-    vuelo.setEstado(EstadoVuelo.FINALIZADO);
+//Ejercicio 13
+    @Override
+    public Retorno realizarReserva(String codigoDeVuelo, String cedula) {
 
-    Retorno retorno = new Retorno(Retorno.Resultado.OK);
-    retorno.valorString = vuelo.getCodigoVuelo();
-    retorno.valorEntero = aeropuerto.getVuelosEnEspera().cantidad();
+        if (codigoDeVuelo == null || codigoDeVuelo.trim().isEmpty()
+                || cedula == null || cedula.trim().isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
 
-    return retorno;
-}
+        if (!cedula.matches("^(\\d{1,2}\\.)?\\d{3}\\.\\d{3}-\\d$")) {
+            return new Retorno(Retorno.Resultado.ERROR_2);
+        }
 
+        Vuelo vueloEncontrado = null;
+        for (int i = 0; i < vuelos.Longitud(); i++) {
+            Vuelo v = vuelos.Obtener(i);
+            if (v.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo)) {
+                vueloEncontrado = v;
+                break;
+            }
+        }
+        if (vueloEncontrado == null) {
+            return new Retorno(Retorno.Resultado.ERROR_3);
+        }
+
+        Pasajero pasajeroEncontrado = null;
+        for (int i = 0; i < pasajeros.Longitud(); i++) {
+            Pasajero p = pasajeros.Obtener(i);
+            if (p.getCedula().equals(cedula)) {
+                pasajeroEncontrado = p;
+                break;
+            }
+        }
+        if (pasajeroEncontrado == null) {
+            return new Retorno(Retorno.Resultado.ERROR_4);
+        }
+
+        if (vueloEncontrado.getEstado() != EstadoVuelo.PROGRAMADO
+                && vueloEncontrado.getEstado() != EstadoVuelo.ABIERTO) {
+            return new Retorno(Retorno.Resultado.ERROR_5);
+        }
+
+        // Contar reservas del vuelo y verificar si el pasajero ya tiene una
+        int cantReservas = 0;
+        for (int i = 0; i < reservas.Longitud(); i++) {
+            Reserva res = reservas.Obtener(i);
+            if (res.getVuelo().equals(vueloEncontrado)) {
+                cantReservas++;
+                if (res.getPasajero().equals(pasajeroEncontrado)) {
+                    return new Retorno(Retorno.Resultado.ERROR_6);
+                }
+            }
+        }
+
+        // Calcular límite con overbooking: ceil(capacidad * 1.10)
+        int limiteOverbooking = (int) Math.ceil(vueloEncontrado.getCapacidad() * 1.10);
+        if (cantReservas >= limiteOverbooking) {
+            return new Retorno(Retorno.Resultado.ERROR_7);
+        }
+
+        reservas.Adicionar(new Reserva(pasajeroEncontrado, vueloEncontrado));
+        return new Retorno(Retorno.Resultado.OK);
+    }
+
+//Ejercicio 14
+    @Override
+    public Retorno realizarCheckIn(String codigoDeVuelo, String cedula) {
+
+        if (codigoDeVuelo == null || codigoDeVuelo.trim().isEmpty()
+                || cedula == null || cedula.trim().isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
+        if (!cedula.matches("^(\\d{1,2}\\.)?\\d{3}\\.\\d{3}-\\d$")) {
+            return new Retorno(Retorno.Resultado.ERROR_2);
+        }
+
+        Vuelo vueloEncontrado = null;
+        for (int i = 0; i < vuelos.Longitud(); i++) {
+            Vuelo v = vuelos.Obtener(i);
+            if (v.getCodigoVuelo().equalsIgnoreCase(codigoDeVuelo)) {
+                vueloEncontrado = v;
+                break;
+            }
+        }
+        if (vueloEncontrado == null) {
+            return new Retorno(Retorno.Resultado.ERROR_3);
+        }
+
+        Pasajero pasajeroEncontrado = null;
+        for (int i = 0; i < pasajeros.Longitud(); i++) {
+            Pasajero p = pasajeros.Obtener(i);
+            if (p.getCedula().equals(cedula)) {
+                pasajeroEncontrado = p;
+                break;
+            }
+        }
+        if (pasajeroEncontrado == null) {
+            return new Retorno(Retorno.Resultado.ERROR_4);
+        }
+
+        if (vueloEncontrado.getEstado() != EstadoVuelo.ABIERTO) {
+            return new Retorno(Retorno.Resultado.ERROR_5);
+        }
+
+        // Buscar reserva del pasajero y contar confirmados
+        Reserva reservaEncontrada = null;
+        int cantConfirmados = 0;
+        for (int i = 0; i < reservas.Longitud(); i++) {
+            Reserva res = reservas.Obtener(i);
+            if (res.getVuelo().equals(vueloEncontrado)) {
+                if (res.getPasajero().equals(pasajeroEncontrado)) {
+                    reservaEncontrada = res;
+                }
+                if (res.isCheckIn()) {
+                    cantConfirmados++;
+                }
+            }
+        }
+
+        if (reservaEncontrada == null) {
+            return new Retorno(Retorno.Resultado.ERROR_6);
+        }
+
+        if (reservaEncontrada.isCheckIn()) {
+            return new Retorno(Retorno.Resultado.ERROR_7);
+        }
+
+        if (cantConfirmados >= vueloEncontrado.getCapacidad()) {
+            return new Retorno(Retorno.Resultado.ERROR_8);
+        }
+
+        reservaEncontrada.setCheckIn(true);
+        return new Retorno(Retorno.Resultado.OK);
+    }
+
+    //Ejercicio 15
+    @Override
+    public Retorno embarqueYDespegueDeVuelo(String codigoAeropuerto) {
+        if (codigoAeropuerto == null || codigoAeropuerto.trim().isEmpty()) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
+        // Buscar el aeropuerto por código
+        Aeropuerto aeropuerto = null;
+        for (int i = 0; i < aeropuertos.Longitud(); i++) {
+            Aeropuerto aerObtenido = aeropuertos.Obtener(i);
+            if (aerObtenido.getCodigo().equalsIgnoreCase(codigoAeropuerto)) {
+                aeropuerto = aerObtenido;
+            }
+        }
+        // Si no existe el aeropuerto
+        if (aeropuerto == null) {
+            return new Retorno(Retorno.Resultado.ERROR_2);
+        }
+        // Si no hay vuelos esperando en la cola
+        if (aeropuerto.getVuelosEnEspera().esVacia()) {
+            return new Retorno(Retorno.Resultado.ERROR_3);
+        }
+        // Tomar el vuelo más antiguo y cambiarlo a finalizado
+        Vuelo vuelo = aeropuerto.getVuelosEnEspera().desencolar();
+        vuelo.setEstado(EstadoVuelo.FINALIZADO);
+        Retorno retorno = new Retorno(Retorno.Resultado.OK);
+        retorno.valorString = vuelo.getCodigoVuelo();
+        retorno.valorEntero = aeropuerto.getVuelosEnEspera().cantidad();
+        return retorno;
+    }
 }

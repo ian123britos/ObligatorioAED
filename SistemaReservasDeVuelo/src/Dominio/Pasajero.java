@@ -75,11 +75,14 @@ public class Pasajero implements Comparable<Pasajero> {
     }
     
     
-    //para poder ordenar por cedula los pasajeros 
-     @Override
-    public int compareTo(Pasajero p) {
-
-        return this.cedula.compareTo(p.cedula);
-    }
+    
+@Override
+public int compareTo(Pasajero p) {
+    String cedula1 = this.cedula.replace(".", "").replace("-", "");
+    String cedula2 = p.cedula.replace(".", "").replace("-", "");
+    long num1 = Long.parseLong(cedula1);
+    long num2 = Long.parseLong(cedula2);
+    return Long.compare(num1, num2);
+}
 
 }
