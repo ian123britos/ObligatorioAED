@@ -6,6 +6,8 @@ import Dominio.Pasajero;
 import Dominio.Reserva;
 import Dominio.Vuelo;
 import Dominio.EstadoVuelo;
+import Dominio.Clase;
+
 
 import Tads.ILista;
 import Tads.ListaSE;
@@ -535,5 +537,88 @@ public class ImplementacionSistema implements ISistema {
         retorno.valorString = vuelo.getCodigoVuelo();
         retorno.valorEntero = aeropuerto.getVuelosEnEspera().cantidad();
         return retorno;
+    }
+    
+    @Override
+    public Retorno consultaDisponibilidad(int[][] matriz, int cantidad, Clase unaClase) {
+        if (cantidad <= 0) {
+            return new Retorno(Retorno.Resultado.ERROR_1);
+        }
+
+        int colInicio, colFin;
+        switch (unaClase) {
+            case PRIMERA:
+                colInicio = 0; colFin = 2; break;
+            case EJECUTIVA:
+                colInicio = 3; colFin = 9; break;
+            case ECONOMICA:
+                colInicio = 10; colFin = 25; break;
+            default:
+                colInicio = 0; colFin = 0; break;
+        }
+
+        String resultado = buscarContiguosPorRango(matriz, colInicio, colFin, cantidad, 0, "");
+
+        int opciones = 0;
+        if (!resultado.isEmpty()) {
+            opciones = resultado.split("\\|").length;
+        }
+
+        Retorno retorno = new Retorno(Retorno.Resultado.OK);
+        retorno.valorEntero = opciones;
+        retorno.valorString = resultado;
+        return retorno;
+    }
+
+    // Recursivo: recorre columnas del rango
+    private String buscarContiguosPorRango(int[][] matriz, int col, int colFin, int cantidad, int fila, String acumulado) {
+        // Caso base: terminamos todas las columnas
+        if (col > colFin) {
+            return acumulado;
+        }
+        // Buscamos contiguos en esta columna desde fila 0
+        String resultadoCol = buscarContiguos(matriz, col, cantidad, 0, acumulado);
+        // Avanzamos a la siguiente columna
+        return buscarContiguosPorRango(matriz, col + 1, colFin, cantidad, 0, resultadoCol);
+    }
+
+    // Recursivo: recorre filas de una columna
+    private String buscarContiguos(int[][] matriz, int columna, int cantidad, int fila, String acumulado) {
+        if (fila + cantidad > matriz.length) {
+            return acumulado;
+        }
+        if (sonContiguosLibres(matriz, columna, fila, cantidad, 0)) {
+            String opcion = armarOpcion(columna, fila, cantidad, 0, "");
+            if (!acumulado.isEmpty()) {
+                acumulado += "|";
+            }
+            acumulado += opcion;
+        }
+        return buscarContiguos(matriz, columna, cantidad, fila + 1, acumulado);
+    }
+
+    // Recursivo: verifica si hay 'cantidad' filas libres desde 'fila'
+    private boolean sonContiguosLibres(int[][] matriz, int columna, int fila, int cantidad, int contador) {
+        if (contador == cantidad) {
+            return true;
+        }
+        if (matriz[fila + contador][columna] != 0) {
+            return false;
+        }
+        return sonContiguosLibres(matriz, columna, fila, cantidad, contador + 1);
+    }
+
+    // Recursivo: arma "A4-B4-C4"
+    private String armarOpcion(int columna, int fila, int cantidad, int contador, String resultado) {
+        if (contador == cantidad) {
+            return resultado;
+        }
+        char letra = (char) ('A' + fila + contador);
+        String asiento = String.valueOf(letra) + (columna + 1);
+        if (!resultado.isEmpty()) {
+            resultado += "-";
+        }
+        resultado += asiento;
+        return armarOpcion(columna, fila, cantidad, contador + 1, resultado);
     }
 }
