@@ -1,6 +1,8 @@
 package SistemaAutogestion;
 
 import Dominio.Categoria;
+import Dominio.Clase;
+
 
 public interface ISistema {
 
@@ -33,5 +35,6 @@ public interface ISistema {
     Retorno realizarCheckIn(String codigoDeVuelo, String cedula);
 
     Retorno embarqueYDespegueDeVuelo(String codigoAeropuerto);
+     Retorno consultaDisponibilidad(int[][] matriz, int cantidad, Clase unaClase);
 
 }
